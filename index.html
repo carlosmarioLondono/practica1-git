@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba API </title>
+</head>
+<body>
+    <h1>Formulario de ingreso y consulta de API</h1>
+    <form >
+      <label for="">Numero 1</label>
+      <input type="number" id="num1">
+      <label for="">Numero 2</label>
+      <input type="number" id="num2">
+      <input type="submit" value="suma">
+        
+    </form>
+    <br>
+    <div class="result">Realiza tu suma</div>
+    <script>
+        document.addEventListener("submit",sendData);
+        function sendData(e){
+            e.preventDefault();
+            const a = document.querySelector("#num1").value;
+            const b = document.querySelector("#num2").value;
+            fetch("http://localhost:5000/add",{
+                method:"POST",
+                headers:{
+                    Accept:"application/json",
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({
+                    a: parseInt(a),
+                    b: parseInt(b)
+                }) 
+            })
+            .then(res => resp.json())
+            .then (data => {
+                const {
+                    result
+
+                } = data;
+                document.querySelector(
+                    ".result"
+                ).innerText='La suma es: ${result}';
+            })
+            .catch(err => console.log(err));
+        }
+
+    </script>
+</body>
+</html>
